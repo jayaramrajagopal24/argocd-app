@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-eks
+    app.kubernetes.io/instance: argocd-eks-instance
+    app.kubernetes.io/version: '1.0.0'
+    app.kubernetes.io/managed-by: kubectl
+  name: argocd-eks-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: argocd-eks
+  template:
+    metadata:
+      labels:
+        app: argocd-eks
+    spec:
+      containers:
+        - image: 576282838840.dkr.ecr.us-east-1.amazonaws.com/argocd-eks:latest
+          imagePullPolicy: Always
+          name: argocd-eks
+          ports:
+            - containerPort: 3000
